@@ -1,0 +1,39 @@
+FixedOpponentsTournament
+AIs
+	MLPSMCTS(100, -1, 100, 10, 0.05, RandomBiasedAI, SimpleSqrtEvaluationFunction3)
+opponent AIs
+	PuppetSearchMCTS(100, -1, 5000, -1, 100, 100, RandomBiasedAI, BasicConfigurableScript(UNITTYPE,EXPAND,), SimpleSqrtEvaluationFunction3)
+maps
+	/Users/mro/CoolaRTS/maps/16x16/basesWorkers16x16.xml
+iterations	10
+maxGameLength	3000
+timeBudget	100
+iterationsBudget	-1
+fullObservability	true
+timeoutCheck	true
+runGC	false
+iteration	map	ai1	ai2	time	winner	crashed	timedout
+0	0	0	0	53	1	-1	0
+1	0	0	0	14	0	-1	1
+2	0	0	0	36	0	-1	1
+3	0	0	0	55	0	-1	1
+4	0	0	0	47	1	-1	0
+5	0	0	0	75	0	-1	1
+6	0	0	0	97	1	-1	0
+7	0	0	0	310	0	-1	1
+8	0	0	0	15	1	-1	0
+9	0	0	0	8	1	-1	0
+Wins:
+5	
+Ties:
+0	
+Average Game Length:
+71.0	
+AI crashes:
+0	
+opponent AI crashes:
+0	
+AI timeout:
+5	
+opponent AI timeout:
+5	
