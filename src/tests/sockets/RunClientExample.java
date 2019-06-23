@@ -8,7 +8,9 @@ import ai.core.AI;
 import ai.*;
 import ai.socket.SocketAI;
 import gui.PhysicalGameStatePanel;
-import javax.swing.JFrame;
+
+import javax.swing.*;
+
 import rts.GameState;
 import rts.PhysicalGameState;
 import rts.PlayerAction;
@@ -28,19 +30,20 @@ import rts.units.UnitTypeTable;
  */
 public class RunClientExample {
     public static void main(String args[]) throws Exception {
-        int episodes = 2;
-        int MAXCYCLES = 1000;
-        int PERIOD = 20;
+        int episodes = 100000;
+        int MAXCYCLES = 500;
+        int PERIOD = 5;
         boolean gameover = false;
         boolean DEBUG = true;
-
         String serverIP = "127.0.0.1";
         int serverPort = 9898;
 //      SocketAI.DEBUG = 1;
         UnitTypeTable utt = new UnitTypeTable();
         AI ai1 = new SocketAI(100,0, serverIP, serverPort, SocketAI.LANGUAGE_JSON, utt);
         AI ai2 = new PassiveAI();
-        for(int i = 0;i<episodes;++i){
+        for(int i = 0;i<episodes;++i) {
+    //                JOptionPane.showMessageDialog(null, System.getProperty("user.dir"));
+
             PhysicalGameState pgs = PhysicalGameState.load("maps/basesWorkers8x8Atest.xml", utt);
             GameState gs = new GameState(pgs, utt);
             GameState clonedGs =  gs.clone();   // for reset the game
@@ -75,8 +78,8 @@ public class RunClientExample {
             System.out.println(gs.winner());
             ai1.gameOver(gs.winner());
             ai2.gameOver(gs.winner());
+            w.dispose();
         }
-
 
     }    
 }
