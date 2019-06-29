@@ -4,6 +4,8 @@
  */
 package tests.sockets;
 
+import ai.abstraction.WorkerRush;
+import ai.abstraction.WorkerRushPlusPlus;
 import ai.core.AI;
 import ai.*;
 import ai.socket.SocketAI;
@@ -33,22 +35,22 @@ public class RunClientExample {
         int episodes = 100000;
         int MAXCYCLES = 500;
         int PERIOD = 5;
-        boolean gameover = false;
         boolean DEBUG = true;
         String serverIP = "127.0.0.1";
         int serverPort = 9898;
 //      SocketAI.DEBUG = 1;
         UnitTypeTable utt = new UnitTypeTable();
         AI ai1 = new SocketAI(100,0, serverIP, serverPort, SocketAI.LANGUAGE_JSON, utt);
-        AI ai2 = new PassiveAI();
+        AI ai2 = new WorkerRush(utt);
+//        AI ai2 = new PassiveAI();
         for(int i = 0;i<episodes;++i) {
     //                JOptionPane.showMessageDialog(null, System.getProperty("user.dir"));
-
-            PhysicalGameState pgs = PhysicalGameState.load("maps/basesWorkers8x8Atest.xml", utt);
+            PhysicalGameState pgs = PhysicalGameState.load("/home/mro/IdeaProjects/microrts-java/maps/8x8/bases8x8workersmelee.xml", utt);
             GameState gs = new GameState(pgs, utt);
-            GameState clonedGs =  gs.clone();   // for reset the game
+//            GameState clonedGs =  gs.clone();   // for reset the game
             ai1.reset();
             ai2.reset();
+            boolean gameover = false;
             JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_WHITE);
             long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
             do{
@@ -56,13 +58,14 @@ public class RunClientExample {
                     long start = System.currentTimeMillis();
                     PlayerAction pa1 = ai1.getAction(0, gs);
                     long end = System.currentTimeMillis();
-                    System.out.println(end-start);
+//                    System.out.println(end-start);
                     PlayerAction pa2 = ai2.getAction(1, gs);
                     gs.issueSafe(pa1);
                     gs.issueSafe(pa2);
 
                     // simulate:
                     gameover = gs.cycle();
+                    System.out.println(gameover);
                     if (DEBUG){
                         w.repaint();
                     }
@@ -75,7 +78,7 @@ public class RunClientExample {
                     }
                 }
             }while(!gameover && gs.getTime() < MAXCYCLES);
-            System.out.println(gs.winner());
+//            System.out.println(gs.winner());
             ai1.gameOver(gs.winner());
             ai2.gameOver(gs.winner());
             w.dispose();
