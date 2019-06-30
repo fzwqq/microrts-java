@@ -80,7 +80,7 @@ public class SocketAI extends AIWithComputationBudget {
             while(in_pipe.ready()) in_pipe.readLine();
 
             if (DEBUG>=1) System.out.println("SocketAI: welcome message received");
-            reset();
+//            reset();
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class SocketAI extends AIWithComputationBudget {
 
         if (DEBUG>=1) System.out.println("SocketAI: welcome message received");
             
-        reset();
+//        reset();
     }
     
     
