@@ -34,7 +34,7 @@
 //   SocketAI.DEBUG = 1;
      public static void runEpisodes() throws Exception {
          UnitTypeTable utt = new UnitTypeTable();
-         AI ai1 = new SocketAI(100,0, serverIP, serverPort, SocketAI.LANGUAGE_JSON, utt);
+         SocketAI ai1 = new SocketAI(100,0, serverIP, serverPort, SocketAI.LANGUAGE_JSON, utt);
          AI ai2 = new WorkerRush(utt);
          //        AI ai2 = new PassiveAI();
          for(int i = 0;i<episodes;++i) {
@@ -44,19 +44,24 @@
              PhysicalGameState pgs = PhysicalGameState.load("/home/mro/IdeaProjects/microrts-java/maps/8x8/bases8x8workersmelee.xml", utt);
              GameState gs = new GameState(pgs, utt);
              JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_WHITE);
-             ai1.reset();
+             w.setFocusable(false);
+             ai1.myReset(gs,0);
              ai2.reset();
              boolean gameover = false;
              long nextTimeToUpdate = System.currentTimeMillis() + PERIOD;
              do{
 
                  if (System.currentTimeMillis()>=nextTimeToUpdate) {
+
                      PlayerAction pa1 = ai1.getAction(0, gs);
                      PlayerAction pa2 = ai2.getAction(1, gs);
                      gs.issueSafe(pa1);
                      gs.issueSafe(pa2);
                      // simulate:
                      gameover = gs.cycle();
+
+                     ai1.sendGameState(gs, 0,false);
+//                   ai2.send
                      if (DEBUG){
                          w.repaint();
                      }
