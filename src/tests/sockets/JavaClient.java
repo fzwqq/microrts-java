@@ -41,10 +41,10 @@
 
 //           JOptionPane.showMessageDialog(null, System.getProperty("user.dir"));
 //           GameState clonedGs =  gs.clone();   //s for reset the game
-             PhysicalGameState pgs = PhysicalGameState.load("/home/mro/IdeaProjects/microrts-java/maps/8x8/bases8x8workersmelee.xml", utt);
+             PhysicalGameState pgs = PhysicalGameState.load("maps/8x8/bases8x8workersmelee.xml", utt);
              GameState gs = new GameState(pgs, utt);
              JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_WHITE);
-             w.setFocusable(false);
+//             w.setFocusable(false);
              ai1.myReset(gs,0);
              ai2.reset();
              boolean gameover = false;
