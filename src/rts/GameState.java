@@ -27,6 +27,7 @@ public class GameState {
     protected PhysicalGameState pgs = null;
     protected HashMap<Unit,UnitActionAssignment> unitActions = new LinkedHashMap<>();
     protected UnitTypeTable utt = null;
+    protected int maxCycles = 0;
 
     /**
      * Initializes the GameState with a PhysicalGameState and a UnitTypeTable
@@ -37,7 +38,21 @@ public class GameState {
         pgs = a_pgs;
         utt = a_utt;
     }
-        
+
+
+    public int getMaxCycles() {
+        return maxCycles;
+    }
+
+    public void setMaxCycles(int maxCycles) {
+        this.maxCycles = maxCycles;
+    }
+
+    public boolean timeOut(){
+        return this.getTime() >= this.getMaxCycles();
+    }
+
+
     /**
      * Current game timestep (frames since beginning)
      * @return
@@ -137,7 +152,7 @@ public class GameState {
      * @return
      */
     public boolean gameover() {
-        return pgs.gameover();
+        return pgs.gameover() || this.timeOut();
     }
     
     /**

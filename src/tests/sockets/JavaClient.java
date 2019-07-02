@@ -35,14 +35,15 @@
      public static void runEpisodes() throws Exception {
          UnitTypeTable utt = new UnitTypeTable();
          SocketAI ai1 = new SocketAI(100,0, serverIP, serverPort, SocketAI.LANGUAGE_JSON, utt);
-         AI ai2 = new WorkerRush(utt);
+         AI ai2 = new PassiveAI();
          //        AI ai2 = new PassiveAI();
          for(int i = 0;i<episodes;++i) {
 
 //           JOptionPane.showMessageDialog(null, System.getProperty("user.dir"));
-//           GameState clonedGs =  gs.clone();   //s for reset the game
+//           GameState clonedGs =  gs.clone();   //for reset the game
              PhysicalGameState pgs = PhysicalGameState.load("maps/8x8/bases8x8workersmelee.xml", utt);
              GameState gs = new GameState(pgs, utt);
+             gs.setMaxCycles(MAXCYCLES);    // this curial for checking timeout game over
              JFrame w = PhysicalGameStatePanel.newVisualizer(gs, 640, 640, false, PhysicalGameStatePanel.COLORSCHEME_WHITE);
 //             w.setFocusable(false);
              ai1.myReset(gs,0);
